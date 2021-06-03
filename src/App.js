@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         
-        <h1>Roland Exchange</h1>
+        <h1>Coin Exchange</h1>
 
       </header>
       <table>
