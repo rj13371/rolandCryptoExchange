@@ -8,6 +8,7 @@ function App() {
       <header className="App-header">
         
         <h1>Coin Exchange</h1>
+        <h2>Best cryptocurrency prices</h2>
 
       </header>
       <table>
