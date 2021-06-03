@@ -27,7 +27,7 @@ export default class Coin extends Component {
     handleClick(event){
         event.preventDefault();
 
-        const randomPercentage = 0.995 + Math.random() * 0.01;
+        const randomPercentage = 0.995 + Math.random() * 0.2;
 
         this.setState (function (oldState) {
             return {
