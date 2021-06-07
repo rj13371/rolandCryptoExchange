@@ -7,30 +7,27 @@ border: 1px solid #cccccc;
 width: 25vh;
 `;
 
-export default class Coin extends Component {
+export default class Coin extends Component{
     constructor(props){
         super(props);
         this.state = {
             name: this.props.name,
             ticker: this.props.ticker,
-            price: this.props.price
+            price: this.props.price,
+            image: this.props.image,
+            openedCard: false,
         };
         this.handleClick = this.handleClick.bind(this);
     }
 
     handleClick(event){
         event.preventDefault();
-
-        // const randomPercentage = 0.995 + Math.random() * 0.1;
-        // this.setState(function(oldState) {
-        //     return {
-        //         price: oldState.price * randomPercentage
-        //     };
-        // });
-
-        fetch('https://api.scryfall.com/cards/random')
+            if (this.state.openedCard === true) {
+              return;
+            }
+        fetch('https://api.scryfall.com/cards/random?q=b%3Awwk')
         .then(response => response.json())
-        .then(card=> this.setState({name: card.name, price: card.prices.usd, ticker: card.set_name }, () => console.log (card.name)))
+        .then(card=> this.setState({name: card.name, price: card.prices.usd, ticker: card.set_name, image: card.image_uris.small, openedCard: true, packTotal: this.props.packTotal + card.prices.usd}, () => console.log (card.name)))
 
     }
 
@@ -41,11 +38,13 @@ export default class Coin extends Component {
               <Td>{this.state.name}</Td>
               <Td>{this.state.ticker}</Td>
               <Td>${this.state.price}</Td>
-              <Td>
+              <Td><img src ={this.state.image}/></Td>
+              <Td> 
                   <form action = '#' method ="POST">
                   <button onClick={this.handleClick}>Open a card</button>
                     </form>
                       </Td>
+                      
             </tr>
             );
     }

@@ -2,7 +2,8 @@ import React from 'react';
 import './App.css';
 import Coin from './components/Coin/Coin/Coin';
 import AccountBalance from './components/Coin/AccountBalance/AccountBalance';
-import styled from 'styled-components'
+import styled from 'styled-components';
+
 
 const Title = styled.h1`
   font-size: 4rem;
@@ -10,8 +11,11 @@ const Title = styled.h1`
   color: white;
 `;
 
+
+
 class App extends React.Component {
 
+  
   constructor(props){
     super(props);
     this.state = {
@@ -45,6 +49,8 @@ class App extends React.Component {
       ]
     }
   }
+
+  
 
   render(){
     return (
