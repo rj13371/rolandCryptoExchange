@@ -3,6 +3,7 @@ import './App.css';
 import Coin from './components/Coin/Coin/Coin';
 import AccountBalance from './components/Coin/AccountBalance/AccountBalance';
 import styled from 'styled-components';
+import Metamask from './components/Coin/Metamask/Metamask'
 
 
 const Title = styled.h1`
@@ -62,6 +63,7 @@ class App extends React.Component {
           
         </header>
         <AccountBalance amount = {this.state.balance} />
+        <Metamask account = {this.state.account}/>
         <table>
         <thead>
           <tr>
