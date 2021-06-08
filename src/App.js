@@ -62,7 +62,6 @@ class App extends React.Component {
           <h2>Pack war on the blockchain and win cryptocurrency!</h2>
           
         </header>
-        <AccountBalance amount = {this.state.balance} />
         <Metamask account = {this.state.account}/>
         <table>
         <thead>
