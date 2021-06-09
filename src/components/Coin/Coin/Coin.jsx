@@ -16,6 +16,7 @@ export default class Coin extends Component{
             price: this.props.price,
             image: this.props.image,
             openedCard: false,
+            totalPackValue: 0
         };
         this.handleClick = this.handleClick.bind(this);
     }
@@ -25,9 +26,9 @@ export default class Coin extends Component{
             if (this.state.openedCard === true) {
               return;
             }
-        fetch('https://api.scryfall.com/cards/random?q=b%3Awwk')
+        fetch('https://api.scryfall.com/cards/random')
         .then(response => response.json())
-        .then(card=> this.setState({name: card.name, price: card.prices.usd, ticker: card.set_name, image: card.image_uris.small, openedCard: true, packTotal: this.props.packTotal + card.prices.usd}, () => console.log (card.name)))
+        .then(card=> this.setState({name: card.name, price: card.prices.usd, ticker: card.set_name, image: card.image_uris.small, openedCard: true}, () => console.log (card.name, this.state.totalPackValue)))
 
     }
 
