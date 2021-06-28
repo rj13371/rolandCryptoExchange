@@ -3,7 +3,6 @@ import Web3 from 'web3';
 import styled from 'styled-components';
 
 const Section = styled.section`
-    border: 1px solid red;
     font-size: 2rem;
 `
 
@@ -23,11 +22,11 @@ export default class metamask extends React.Component {
             account: window.ethereum.selectedAddress,
             accountBalance: this.props.accountBalance,
             contract: null,
-            contract_address: '0x07c8Ee87889feCAAe5512e7e13e20da918038304'
+            contract_address: '0x07c8Ee87889feCAAe5512e7e13e20da918038304',
+            isToggleOn: false
 
         };
         this.handleClick = this.handleClick.bind(this);
-        this.handleClickB = this.handleClickB.bind(this);
     }
 
     
@@ -36,37 +35,12 @@ export default class metamask extends React.Component {
     event.preventDefault();
     window.ethereum.request({ method: 'eth_requestAccounts' });
     console.log (window.ethereum.selectedAddress);
-};
-
-handleClickB(event){
-  event.preventDefault();
-  // this.state.contract.methods.result().send({from: this.state.account,  gas: 470000, value: 10000,
-  //   gasPrice:0})
-  window.ethereum
-    .request({
-      method: 'eth_sendTransaction',
-      params: [
-        {
-          from: this.state.account,
-          to: this.state.contract_address,
-          value: '0x00',
-          gasPrice: '0x00',
-          gas: '0x00',
-          data: '0x6021abac'
-        },
-      ],
-    })
-    .then((result) => {
-      // The result varies by by RPC method.
-      // For example, this method will return a transaction hash hexadecimal string on success.
-    })
-    .catch((error) => {
-      // If the request fails, the Promise will reject with an error.
-    });
-};
-
-
+    if (window.ethereum.selectedAddress){
+      this.setState({
+        isToggleOn: true
+      });}
     
+};
 
 
     async loadBlockChain() {
@@ -105,7 +79,7 @@ handleClickB(event){
     }
       console.log(network) // should give you main if you're connected to the main network via metamask...
       if (!window.ethereum.selectedAddress){
-          this.setState({account: "Not connected"})
+          this.setState({account: "Not Connected"})
       } else {
         this.setState({account: window.ethereum.selectedAddress})
       };
@@ -115,15 +89,18 @@ handleClickB(event){
   
 
   componentDidMount() {
-    this.loadBlockChain()
+    this.loadBlockChain();
+    if (window.ethereum.selectedAddress){
+      this.setState({
+        isToggleOn: true
+      });}
   }
   render() {
     return (
       <div>
-        <p>Your account: {this.state.account}</p>
+        <Section>Your account: {this.state.account}</Section>
         <Section id='balance'></Section>
-        <button onClick={this.handleClick}>Connect Metamask</button>
-        <button onClick={this.handleClickB}>Call Function</button>
+        <button onClick={this.handleClick}>{this.state.isToggleOn ? 'Metamask Connected!' : 'Connect Metamask'}</button>
       </div>
     );
   }

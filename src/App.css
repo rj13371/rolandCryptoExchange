@@ -14,8 +14,8 @@
 }
 
 .App-header {
+  border: thick double #32a1ce;
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
