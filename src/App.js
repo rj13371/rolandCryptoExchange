@@ -26,6 +26,9 @@ class App extends React.Component {
   }
 
   componentDidMount = async () => {
+
+
+
     const response = await axios.get( coinsUrl );
     const coinIds = response.data.slice(0, COIN_COUNT).map( coin => coin.id );
 
@@ -35,7 +38,6 @@ class App extends React.Component {
 
     const coinPriceData = coinData.map( function(response) {
       const coin = response.data;
-      console.log (coin[0].current_price)
       //debugger;
       return {
         key: coin[0].id,
@@ -47,7 +49,6 @@ class App extends React.Component {
 
       };
     });
-    // console.log(coinIds,coinData, coinPriceData);
     this.setState({ coinData: coinPriceData });
   }
   

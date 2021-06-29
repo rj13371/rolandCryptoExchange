@@ -14,12 +14,14 @@ if (typeof window.ethereum !== 'undefined') {
   };
 
 
+
+
 export default class metamask extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
-            account: window.ethereum.selectedAddress,
+            account: this.props.account,
             accountBalance: this.props.accountBalance,
             contract: null,
             contract_address: '0x07c8Ee87889feCAAe5512e7e13e20da918038304',
@@ -33,26 +35,43 @@ export default class metamask extends React.Component {
 
   handleClick(event){
     event.preventDefault();
-    window.ethereum.request({ method: 'eth_requestAccounts' });
+    if (typeof window.ethereum == 'undefined'){
+      alert('please install metamask to see your account balance')
+      return true
+    }else if (typeof window.ethereum != 'undefined'){
+    window.ethereum.request({ method: 'eth_requestAccounts' })
     console.log (window.ethereum.selectedAddress);
     if (window.ethereum.selectedAddress){
       this.setState({
         isToggleOn: true
-      });}
+      });}}
     
 };
 
 
     async loadBlockChain() {
+
+      const accountCheck = async () => 
+      {if (typeof window.ethereum.selectedAddress != 'undefined'){
+        this.setState({
+          account: window.ethereum.selectedAddress,
+          isToggleOn: true
+        });}}
+        accountCheck();
+
       const Web3 = require("web3");
       const ethEnabled = async () => {
-        if (window.ethereum) {
-          await window.ethereum.send('eth_requestAccounts');
+        if (window.ethereum && typeof window.ethereum.selectedAddress == 'undefined') {
+          await window.ethereum.send('eth_requestAccounts')
+          .then(alert('please refresh to see your account balance'))
+
           window.web3 = new Web3(window.ethereum);
+          
           return true;
         }
         return false;
       }
+      ethEnabled();
       const network = await web3.eth.net.getNetworkType();
       let contract_abi = [ { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "bytes32", "name": "id", "type": "bytes32" } ], "name": "ChainlinkCancelled", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "bytes32", "name": "id", "type": "bytes32" } ], "name": "ChainlinkFulfilled", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "bytes32", "name": "id", "type": "bytes32" } ], "name": "ChainlinkRequested", "type": "event" }, { "inputs": [ { "internalType": "bytes32", "name": "_requestId", "type": "bytes32" }, { "internalType": "bytes32", "name": "_volume", "type": "bytes32" } ], "name": "fulfill", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "requestVolumeData", "outputs": [ { "internalType": "bytes32", "name": "requestId", "type": "bytes32" } ], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "bytes32", "name": "_bytes32", "type": "bytes32" } ], "name": "bytes32ToString", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "pure", "type": "function" }, { "inputs": [], "name": "result", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "volume", "outputs": [ { "internalType": "bytes32", "name": "", "type": "bytes32" } ], "stateMutability": "view", "type": "function" } ]
       let contract_address = '0x07c8Ee87889feCAAe5512e7e13e20da918038304' //kovan
@@ -89,11 +108,21 @@ export default class metamask extends React.Component {
   
 
   componentDidMount() {
-    this.loadBlockChain();
-    if (window.ethereum.selectedAddress){
-      this.setState({
-        isToggleOn: true
-      });}
+
+    const init = async () => {
+      if (typeof window.ethereum == 'undefined'){
+        alert('please install metamask to see your account balance')
+        window.ethereum = 'notInstalled'
+        return true;
+      } else if (typeof window.ethereum !='undefined'){
+        this.loadBlockChain();
+      }
+    };
+    init();
+
+    
+
+    
   }
   render() {
     return (
