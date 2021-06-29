@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Coin from '../Coin/Coin/Coin';
 import styled from 'styled-components';
 
@@ -9,8 +9,8 @@ const Table = styled.table`
     font-size: 1.4rem;
     `;
 
-export default class CoinList extends Component {
-    render() {
+ export default function CoinList(props) {
+
         return (
             <Table> 
             <thead>
@@ -24,7 +24,7 @@ export default class CoinList extends Component {
             </thead>
             <tbody>
               {
-                this.props.coinData.map( ({key, name, symbol, current_price,price_change_percentage_24h, market_cap}) =>
+                props.coinData.map( ({key, name, symbol, current_price,price_change_percentage_24h, market_cap}) =>
                   <Coin 
                   key={key} 
                   id={key}
@@ -39,5 +39,6 @@ export default class CoinList extends Component {
             </tbody>
           </Table>
         )
-    }
+
 }
+
