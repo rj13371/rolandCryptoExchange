@@ -52,11 +52,17 @@ export default class metamask extends React.Component {
     async loadBlockChain() {
 
       const accountCheck = async () => 
-      {if (typeof window.ethereum.selectedAddress != 'undefined'){
+      {if (window.ethereum.selectedAddress == null){
         this.setState({
-          account: window.ethereum.selectedAddress,
-          isToggleOn: true
-        });}}
+          
+          isToggleOn: false
+        });}else{
+            this.setState({
+                account: window.ethereum.selectedAddress,
+                isToggleOn:true})
+        }
+    
+    }
         accountCheck();
 
       const Web3 = require("web3");
@@ -127,12 +133,10 @@ export default class metamask extends React.Component {
   render() {
     return (
       <div>
-        <Section>Your account: {this.state.account}</Section>
+        <Section>Your Account: {this.state.account}</Section>
         <Section id='balance'></Section>
         <button onClick={this.handleClick}>{this.state.isToggleOn ? 'Metamask Connected!' : 'Connect Metamask'}</button>
       </div>
     );
   }
 }
-
-

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React　from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -8,20 +8,20 @@ const Td = styled.td`
 `;
 
 
-export default class Coin extends Component {
-    render() {
+export default function Coin (props) {
             return(
                 <tr>
-                  <Td>{this.props.name}</Td>
-                  <Td>{this.props.symbol}</Td>
-                  <Td>${this.props.current_price}</Td>
-                  <Td>${this.props.market_cap}</Td>
-                  <Td>{this.props.price_change_percentage_24h}%</Td>
+                  <Td><img src = {props.image}/></Td>
+                  <Td>{props.name}</Td>
+                  <Td>{props.symbol}</Td>
+                  <Td>${props.current_price}</Td>
+                  <Td>${props.market_cap}</Td>
+                  <Td>{props.price_change_percentage_24h}%</Td>
                 </tr>
               );
-    }
 }
 
 Coin.propTypes = {
     name: PropTypes.string.isRequired,
 }
+
