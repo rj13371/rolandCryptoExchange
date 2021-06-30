@@ -15,6 +15,7 @@ const Table = styled.table`
             <Table> 
             <thead>
               <tr>
+            <th>Logo</th>
             <th>Coin Name</th>
             <th>Coin Ticker</th>
             <th>Price</th>
@@ -24,8 +25,9 @@ const Table = styled.table`
             </thead>
             <tbody>
               {
-                props.coinData.map( ({key, name, symbol, current_price,price_change_percentage_24h, market_cap}) =>
+                props.coinData.map( ({key,image, name, symbol, current_price,price_change_percentage_24h, market_cap}) =>
                   <Coin 
+                  image ={image}
                   key={key} 
                   id={key}
                   name={name} 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import CoinList from './components/CoinList/CoinList';
+import Metamask from './components/Coin/Metamask/Metamask'
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -10,16 +11,20 @@ const Title = styled.h1`
   color: white;
 `;
 
-const COIN_COUNT = 10;
+const COIN_COUNT = 25;
 const coinsUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd';
 const tickerUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=';
+const gasURL = 'https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=YK9XI24QV8JBJ7P5NX26W7C2HAIDSGNQ3K'
 
 function App () {
 
   const [coinData, setCoinDataList] = useState([]);
+  const [gasPriceA, setGasPriceA] = useState([]);
+  const [gasPriceB, setGasPriceB] = useState([]);
+  const [gasPriceC, setGasPriceC] = useState([]);
   
 
-  useEffect(() => {
+  useEffect( () => {
     (async () => {
       const response = await axios.get( coinsUrl );
       const coinIds = response.data.slice(0, COIN_COUNT).map( coin => coin.id );
@@ -32,6 +37,7 @@ function App () {
         const coin = response.data;
         //debugger;
         return {
+          image: coin[0].image.replace('large', 'small'),
           key: coin[0].id,
           name: coin[0].name,
           symbol: coin[0].symbol.toUpperCase(),
@@ -42,6 +48,19 @@ function App () {
         };
       });
       setCoinDataList( coinPriceData );
+    })()
+  }, []);
+
+  useEffect( () => {
+    (async () => {
+      const response = await axios.get( gasURL );
+      const gasPriceDataA = response.data.result.SafeGasPrice;
+      const gasPriceDataB = response.data.result.ProposeGasPrice;
+      const gasPriceDataC = response.data.result.FastGasPrice;
+
+      setGasPriceA( gasPriceDataA );
+      setGasPriceB( gasPriceDataB );
+      setGasPriceC( gasPriceDataC );
     })()
   }, [])
 
@@ -54,8 +73,11 @@ function App () {
         <header className="App-header">
           
           <Title>Cryptocurrency Exchange</Title>
-          
+          <h5>ETH Gas Prices Safe: {gasPriceA} Avg: {gasPriceB} Fast: {gasPriceC}</h5>
+          <h6>Powered by Coin Gecko API and Etherscan API</h6>
         </header>
+        <Metamask/>
+        <h1>Top 25 Coins by Marketcap</h1>
         <CoinList 
           coinData={coinData} />
         
