@@ -11,7 +11,7 @@ const Td = styled.td`
 export default function Coin (props) {
             return(
                 <tr>
-                  <Td><img src = {props.image}/></Td>
+                  <Td><a href={props.link}><img src = {props.image}/></a></Td>
                   <Td>{props.name}</Td>
                   <Td>{props.symbol}</Td>
                   <Td>${props.current_price}</Td>

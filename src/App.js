@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import CoinList from './components/CoinList/CoinList';
+import Defi from './components/Defi/Defi';
 import Metamask from './components/Coin/Metamask/Metamask'
 import styled from 'styled-components';
 import axios from 'axios';
+import opengraphbtc from './opengraphbtc.png'
 
 const Title = styled.h1`
   font-size: 4rem;
   text-align: center;
   color: white;
+`;
+
+const Link = styled.a`
+color:white;
+text-decoration: none; 
+background-color: none;
 `;
 
 const COIN_COUNT = 25;
@@ -30,6 +38,7 @@ function App () {
       const coinIds = response.data.slice(0, COIN_COUNT).map( coin => coin.id );
   
       const promises = coinIds.map( id => axios.get( tickerUrl + id ));
+      const coinGeckoURL = 'https://www.coingecko.com/en/coins/'
   
       const coinData = await Promise.all( promises );
   
@@ -37,6 +46,7 @@ function App () {
         const coin = response.data;
         //debugger;
         return {
+          link: coinGeckoURL + coin[0].name.toLowerCase().replace(' ', '-'),
           image: coin[0].image.replace('large', 'small'),
           key: coin[0].id,
           name: coin[0].name,
@@ -47,6 +57,7 @@ function App () {
   
         };
       });
+
       setCoinDataList( coinPriceData );
     })()
   }, []);
@@ -73,10 +84,12 @@ function App () {
         <header className="App-header">
           
           <Title>Cryptocurrency Exchange</Title>
-          <h5>ETH Gas Prices Safe: {gasPriceA} Avg: {gasPriceB} Fast: {gasPriceC}</h5>
+          <img className ='App-logo' src = {opengraphbtc} alt = 'btc'/>
+          <Link href={'https://etherscan.io/gastracker'}><h5>ETH Gas Prices Safe: {gasPriceA} Avg: {gasPriceB} Fast: {gasPriceC}</h5> </Link>
           <h6>Powered by Coin Gecko API and Etherscan API</h6>
         </header>
         <Metamask/>
+        <Defi/>
         <h1>Top 25 Coins by Marketcap</h1>
         <CoinList 
           coinData={coinData} />
