@@ -3,7 +3,8 @@ import Web3 from 'web3';
 import styled from 'styled-components';
 
 const Section = styled.section`
-    font-size: 2rem;
+    font-size: 1.7rem;
+    margin: 10px auto 10px auto
 `
 
 const rpcURL = 'https://kovan.infura.io/v3/0466e9bf793e40abba6293a11474fcff';
@@ -135,7 +136,9 @@ export default class metamask extends React.Component {
       <div>
         <Section>Your Account: {this.state.account}</Section>
         <Section id='balance'></Section>
+        <div><a href={'https://metamask.io/'}><img src = {"https://metamask.io/images/mm-logo.svg"}/></a></div>
         <button onClick={this.handleClick}>{this.state.isToggleOn ? 'Metamask Connected!' : 'Connect Metamask'}</button>
+      <h1> Decentralized Finance </h1>
       </div>
     );
   }
