@@ -83,7 +83,7 @@ function App () {
       <div className="App">
         <header className="App-header">
           
-          <Title>Cryptocurrency Exchange</Title>
+          <Title>Rolands Cryptocurrency Exchange</Title>
           <img className ='App-logo' src = {opengraphbtc} alt = 'btc'/>
           <Link href={'https://etherscan.io/gastracker'}><h5>ETH Gas Prices Safe: {gasPriceA} Avg: {gasPriceB} Fast: {gasPriceC}</h5> </Link>
           <h6>Powered by Coin Gecko API and Etherscan API</h6>
